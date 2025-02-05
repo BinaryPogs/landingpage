@@ -7,6 +7,11 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  future: {
+    hoverOnlyWhenSupported: true,
+    respectDefaultRingColorOpacity: true,
+    disableColorOpacityUtilitiesByDefault: true,
+  },
   theme: {
     extend: {
       colors: {
@@ -21,6 +26,20 @@ const config: Config = {
     },
   },
   plugins: [],
+  // Performance optimizations
+  blocklist: [
+    'container',
+    'space',
+    'divide',
+    'ring',
+  ],
+  safelist: [
+    'bg-background-base',
+    'font-twk',
+    'font-sans',
+  ],
+  darkMode: 'class',
+  important: true,
 };
 
 export default config;
