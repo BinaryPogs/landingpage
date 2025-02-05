@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface CursorProps {
@@ -10,7 +10,6 @@ interface CursorProps {
 }
 
 export function Cursor({
-  color = 'rgba(120, 150, 255, 0.15)',
   size = 160,
   blur = 115,
 }: CursorProps) {
