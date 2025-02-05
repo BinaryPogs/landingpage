@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { themeConfig } from "./src/app/conf/theme";
 
 export default {
   content: [
@@ -9,8 +10,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        'background-base': themeConfig.colors.background.base,
+        'background-gradient-from': themeConfig.colors.background.gradient.from,
+        'background-gradient-to': themeConfig.colors.background.gradient.to,
+      },
+      fontFamily: {
+        twk: ['TWK Everett', 'sans-serif'],
+        sans: ['TWK Everett', 'system-ui', 'sans-serif'],
       },
     },
   },
