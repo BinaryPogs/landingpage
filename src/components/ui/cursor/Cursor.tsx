@@ -10,7 +10,6 @@ interface CursorProps {
 }
 
 export function Cursor({
-  color = 'rgba(120, 150, 255, 0.15)',
   size = 160,
   blur = 115,
 }: CursorProps) {
