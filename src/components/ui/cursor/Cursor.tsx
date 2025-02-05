@@ -10,32 +10,53 @@ interface CursorProps {
 }
 
 export function Cursor({
-  color = 'rgba(120, 150, 255, 0.15)',
   size = 160,
   blur = 115,
 }: CursorProps) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-      setIsVisible(true);
+    // Check if device is mobile
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia('(hover: none) and (pointer: coarse)').matches);
     };
 
-    const handleMouseLeave = () => setIsVisible(false);
-    const handleMouseEnter = () => setIsVisible(true);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
 
-    window.addEventListener('mousemove', updateMousePosition);
-    window.addEventListener('mouseleave', handleMouseLeave);
-    window.addEventListener('mouseenter', handleMouseEnter);
+    // Only add mouse events if not mobile
+    if (!isMobile) {
+      const updateMousePosition = (e: MouseEvent) => {
+        setMousePosition({ x: e.clientX, y: e.clientY });
+        setIsVisible(true);
+      };
+
+      const handleMouseLeave = () => setIsVisible(false);
+      const handleMouseEnter = () => setIsVisible(true);
+
+      window.addEventListener('mousemove', updateMousePosition);
+      window.addEventListener('mouseleave', handleMouseLeave);
+      window.addEventListener('mouseenter', handleMouseEnter);
+
+      return () => {
+        window.removeEventListener('mousemove', updateMousePosition);
+        window.removeEventListener('mouseleave', handleMouseLeave);
+        window.removeEventListener('mouseenter', handleMouseEnter);
+        window.removeEventListener('resize', checkMobile);
+      };
+    }
 
     return () => {
-      window.removeEventListener('mousemove', updateMousePosition);
-      window.removeEventListener('mouseleave', handleMouseLeave);
-      window.removeEventListener('mouseenter', handleMouseEnter);
+      window.removeEventListener('resize', checkMobile);
     };
-  }, []);
+  }, [isMobile]);
+
+  // Don't render anything on mobile
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <AnimatePresence mode='wait'>
