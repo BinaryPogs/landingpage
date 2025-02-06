@@ -23,19 +23,28 @@ const config: Config = {
         twk: ['TWK Everett', 'sans-serif'],
         sans: ['TWK Everett', 'system-ui', 'sans-serif'],
       },
-      keyframes: {
-        scrollLine: {
-          '0%': { transform: 'scaleY(0) translateY(0)', opacity: '0.2' },
-          '50%': { transform: 'scaleY(1) translateY(40px)', opacity: '1' },
-          '100%': { transform: 'scaleY(0) translateY(80px)', opacity: '0.2' },
-        }
-      },
-      animation: {
-        'scrollLine': 'scrollLine 2s linear infinite',
-        'scrollLineDelayed': 'scrollLine 2s linear infinite 1s',
-      },
     },
   },
+  safelist: [
+    'bg-background-base',
+    'font-twk',
+    'font-sans',
+    'animate-scroll',
+    'animate-pulse',
+    'fixed',
+    'absolute',
+    'relative',
+    'flex',
+    'block',
+    // Opacity classes
+    {
+      pattern: /opacity-[0-9]+/,
+    },
+    // Transform classes
+    {
+      pattern: /transform-./,
+    },
+  ],
   plugins: [],
   // Performance optimizations
   blocklist: [
@@ -43,11 +52,6 @@ const config: Config = {
     'space',
     'divide',
     'ring',
-  ],
-  safelist: [
-    'bg-background-base',
-    'font-twk',
-    'font-sans',
   ],
   darkMode: 'class',
   important: true,
