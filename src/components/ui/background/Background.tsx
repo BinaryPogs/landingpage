@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
-import { Particles } from "@/components/ui/background/Particles";
+import { Particles } from "@/components/ui/particle/Particles";
 
 interface BackgroundProps {
   children: ReactNode;
