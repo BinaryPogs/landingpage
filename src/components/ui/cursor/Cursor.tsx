@@ -8,7 +8,7 @@ interface CursorProps {
 }
 
 export function Cursor({
-  size = 42,
+  size = 52,
   blur = 44,
 }: CursorProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -70,9 +70,9 @@ export function Cursor({
       // Smooth transition for both moving and stopping
       const bufferDuration = 600;
       const transitionDuration = 12000;
-      const growthRate = 0.012;
+      const growthRate = 0.018;
       const shrinkRate = 0.015;
-      const stateTransitionRate = 0.001;
+      const stateTransitionRate = 0.002;
       
       let targetPulse;
       if (timeSinceMove < bufferDuration) {
