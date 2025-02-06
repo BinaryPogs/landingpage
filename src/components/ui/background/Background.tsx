@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
-import { Particles } from "./Particles";
+import { Particles } from "@/components/ui/background/Particles";
 
 interface BackgroundProps {
   children: ReactNode;
@@ -12,13 +12,20 @@ interface BackgroundProps {
 export function Background({ children, className }: BackgroundProps) {
   return (
     <div className={cn("relative min-h-screen w-full", className)}>
-      {/* Base dark background */}
-      <div className="fixed inset-0 bg-[#030f1c]" />
+      {/* Darkest base background */}
+      <div className="fixed inset-0 bg-[#020a14]" />
       
-      {/* Subtle gradient overlay */}
+      {/* Very pronounced gradient overlay */}
       <div 
-        className="fixed inset-0 bg-gradient-to-b from-[#081e36] via-[#051628] to-[#030f1c]"
-        style={{ opacity: 0.6 }}
+        className="fixed inset-0"
+        style={{ 
+          background: `linear-gradient(180deg, 
+            rgba(30, 60, 100, 1) 0%,
+            rgba(15, 35, 60, 0.7) 25%,
+            rgba(5, 15, 30, 0.5) 50%,
+            rgba(2, 10, 20, 1) 100%
+          )`
+        }}
       />
       
       {/* Particles */}
