@@ -8,8 +8,8 @@ interface CursorProps {
 }
 
 export function Cursor({
-  size = 52,
-  blur = 44,
+  size = 22,
+  blur = 34,
 }: CursorProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mousePosRef = useRef<[number, number]>([0, 0]);
