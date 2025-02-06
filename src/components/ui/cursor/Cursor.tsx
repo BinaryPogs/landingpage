@@ -1,10 +1,8 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface CursorProps {
-  color?: string;
   size?: number;
   blur?: number;
 }
@@ -13,42 +11,72 @@ export function Cursor({
   size = 160,
   blur = 115,
 }: CursorProps) {
-  const [mousePosition, setMousePosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mousePosRef = useRef<[number, number]>([0, 0]);
+  const animationFrameRef = useRef<number | null>(null);
+  const [isBrowser, setIsBrowser] = useState(false);
 
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    setMousePosition({ x: e.clientX, y: e.clientY });
+  const setCanvasSize = useCallback((canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
+    const dpr = window.devicePixelRatio || 1;
+    const [width, height] = [window.innerWidth, window.innerHeight];
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+    ctx.scale(dpr, dpr);
   }, []);
 
   useEffect(() => {
-    if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
-      return;
-    }
+    setIsBrowser(typeof window !== 'undefined');
+  }, []);
 
-    setIsMounted(true);
+  useEffect(() => {
+    if (!isBrowser) return;
+    if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    setCanvasSize(canvas, ctx);
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mousePosRef.current = [e.clientX, e.clientY];
+    };
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      const [x, y] = mousePosRef.current;
+      const gradient = ctx.createRadialGradient(x, y, 0, x, y, size);
+      
+      gradient.addColorStop(0.08, 'rgba(120, 150, 255, 0.25)');
+      gradient.addColorStop(0.30, 'rgba(120, 150, 255, 0.15)');
+      gradient.addColorStop(0.60, 'rgba(120, 150, 255, 0.10)');
+      gradient.addColorStop(0.85, 'rgba(120, 150, 255, 0.05)');
+      gradient.addColorStop(1, 'transparent');
+
+      ctx.filter = `blur(${blur}px)`;
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+
+    animate();
+
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('resize', () => setCanvasSize(canvas, ctx));
 
     return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [handleMouseMove]);
+  }, [isBrowser, setCanvasSize, size, blur]);
 
-  if (!isMounted) return null;
-
-  return (
-    <motion.div
-      className="pointer-events-none fixed inset-0 z-30"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      style={{
-        background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px,
-          rgba(120, 150, 255, 0.12) ${size * 0.04}px,
-          rgba(120, 150, 255, 0.08) ${size * 0.15}px,
-          rgba(120, 150, 255, 0.05) ${size * 0.35}px,
-          rgba(120, 150, 255, 0.03) ${size * 0.65}px,
-          transparent ${size}px)`,
-        filter: `blur(${blur}px)`,
-      }}
-    />
-  );
+  return <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 z-30" />;
 } 
