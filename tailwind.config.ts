@@ -18,17 +18,11 @@ const config: Config = {
         'background-base': themeConfig.colors.background.base,
         'background-gradient-from': themeConfig.colors.background.gradient.from,
         'background-gradient-to': themeConfig.colors.background.gradient.to,
-      },
-      fontFamily: {
-        twk: ['TWK Everett', 'sans-serif'],
-        sans: ['TWK Everett', 'system-ui', 'sans-serif'],
-      },
+      }
     },
   },
   safelist: [
     'bg-background-base',
-    'font-twk',
-    'font-sans',
     'animate-scroll',
     'animate-pulse',
     'fixed',
@@ -46,7 +40,6 @@ const config: Config = {
     },
   ],
   plugins: [],
-  // Performance optimizations
   blocklist: [
     'container',
     'space',

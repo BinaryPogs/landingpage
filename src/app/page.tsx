@@ -1,10 +1,11 @@
 'use client';
-
+  
 import { MailingListForm } from "@/components/ui/mailing/MailingListForm";
 import { motion } from "framer-motion";
 import { useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { ScrollIndicator } from "@/components/ui/scroll/ScrollIndicator";
+import { AnimatedHeading } from "@/components/ui/text/AnimatedHeading";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -13,7 +14,6 @@ export default function Home() {
     offset: ["start start", "end start"]
   });
 
-  // Transform values for animations
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const opacity2 = useTransform(scrollYProgress, [0.3, 0.6], [0, 1]);
   const y2 = useTransform(scrollYProgress, [0.3, 0.6], [100, 0]);
@@ -25,9 +25,10 @@ export default function Home() {
         style={{ opacity }}
         className="flex flex-col min-h-screen items-center justify-center relative"
       >
-        <h1 className="font-twk font-normal text-[42px] leading-[42px] h-[42px] tracking-[-2.2px] text-white">
-          Join the inner circle
-        </h1>
+        <AnimatedHeading 
+          text="Join the inner circle"
+          className="font-normal text-[42px] leading-[42px] tracking-[-2.2px] text-white/90"
+        />
         <ScrollIndicator />
       </motion.div>
 
@@ -43,7 +44,7 @@ export default function Home() {
           viewport={{ once: true }}
           className="flex flex-col items-center gap-8"
         >
-          <h2 className="font-twk font-normal text-[42px] leading-[42px] h-[42px] tracking-[-2.2px] text-white">
+          <h2 className="font-normal text-[42px] leading-[42px] h-[42px] tracking-[-2.2px] text-white">
             Ready to join?
           </h2>
           <MailingListForm className="w-full max-w-md" />
