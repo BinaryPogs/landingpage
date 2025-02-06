@@ -7,14 +7,6 @@ interface CursorProps {
   blur?: number;
 }
 
-interface Ripple {
-  x: number;
-  y: number;
-  size: number;
-  opacity: number;
-  time: number;
-}
-
 export function Cursor({
   size = 42,
   blur = 44,
@@ -74,7 +66,6 @@ export function Cursor({
         velocityRef.current[0] * velocityRef.current[0] + 
         velocityRef.current[1] * velocityRef.current[1]
       ) || 0;
-      const normalizedSpeed = Math.min(Math.max(speed / 1000, 0), 1);
       
       // Smooth transition for both moving and stopping
       const bufferDuration = 600;
