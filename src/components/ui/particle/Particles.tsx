@@ -51,20 +51,19 @@ export function Particles() {
 
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible' && systemRef.current) {
-        systemRef.current.resetParticles();
+        systemRef.current.disperseParticles();
       }
     };
 
     const handleWindowBlur = () => {
       if (systemRef.current) {
-        systemRef.current.resetParticles();
         systemRef.current.updateMousePosition(window.innerWidth / 2, window.innerHeight / 2);
       }
     };
 
     const handleWindowFocus = () => {
       if (systemRef.current) {
-        systemRef.current.resetParticles();
+        systemRef.current.disperseParticles();
       }
     };
 

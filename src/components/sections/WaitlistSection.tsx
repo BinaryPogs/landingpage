@@ -18,7 +18,7 @@ export function WaitlistSection({ opacity, y }: WaitlistSectionProps) {
       <AnimatedHeading 
         text="Join the Waitlist"
         size="lg"
-        className="mb-4"
+        className="mb-4 text-white"
       />
       <MailingListForm className="w-full max-w-md" />
     </motion.div>

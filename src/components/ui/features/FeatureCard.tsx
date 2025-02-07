@@ -17,16 +17,17 @@ export function FeatureCard({ title, description, className }: FeatureCardProps)
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
       className={cn(
-        "p-6 rounded-xl bg-white/5 backdrop-blur-sm",
-        "border border-white/10 hover:border-white/20",
-        "transition-colors duration-300",
+        "p-6 rounded-xl backdrop-blur-sm",
+        "border hover:border-[#FFD700]/30",
+        "transition-all duration-300",
+        "hover:shadow-lg hover:shadow-[#FFD700]/5",
         className
       )}
     >
-      <h3 className="text-xl font-medium text-white mb-2">
+      <h3 className="text-xl font-medium text-[#FFD700] mb-2">
         {title}
       </h3>
-      <p className="text-white/70 text-sm leading-relaxed">
+      <p className="text-[#94A3B8] text-sm leading-relaxed">
         {description}
       </p>
     </motion.div>
