@@ -5,6 +5,7 @@ import { ParticleSystem } from './ParticleSystem';
 
 export function Particles() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const systemRef = useRef<ParticleSystem | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -16,37 +17,79 @@ export function Particles() {
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      if (systemRef.current) {
+        systemRef.current.resetParticles();
+      }
     };
 
     resize();
     
-    const particleSystem = new ParticleSystem(canvas, ctx);
-    particleSystem.init();
+    systemRef.current = new ParticleSystem(canvas, ctx);
+    systemRef.current.init();
 
     const animate = () => {
-      particleSystem.update();
-      particleSystem.draw();
+      if (systemRef.current) {
+        systemRef.current.update();
+        systemRef.current.draw();
+      }
       requestAnimationFrame(animate);
     };
 
     animate();
 
     const handleMouseMove = (e: MouseEvent) => {
-      particleSystem.updateMousePosition(e.clientX, e.clientY);
+      if (systemRef.current) {
+        systemRef.current.updateMousePosition(e.clientX, e.clientY);
+      }
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      particleSystem.updateMousePosition(e.touches[0].clientX, e.touches[0].clientY);
+      if (systemRef.current) {
+        systemRef.current.updateMousePosition(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && systemRef.current) {
+        systemRef.current.resetParticles();
+      }
+    };
+
+    const handleWindowBlur = () => {
+      if (systemRef.current) {
+        systemRef.current.resetParticles();
+        systemRef.current.updateMousePosition(window.innerWidth / 2, window.innerHeight / 2);
+      }
+    };
+
+    const handleWindowFocus = () => {
+      if (systemRef.current) {
+        systemRef.current.resetParticles();
+      }
+    };
+
+    const handleMouseLeave = () => {
+      if (systemRef.current) {
+        systemRef.current.updateMousePosition(window.innerWidth / 2, window.innerHeight / 2);
+      }
     };
 
     window.addEventListener('resize', resize);
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('touchmove', handleTouchMove);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('blur', handleWindowBlur);
+    window.addEventListener('focus', handleWindowFocus);
+    document.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('blur', handleWindowBlur);
+      window.removeEventListener('focus', handleWindowFocus);
+      document.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, []);
 

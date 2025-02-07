@@ -15,11 +15,12 @@ export class ParticleSystem {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
   private mousePos: { x: number; y: number };
+  private isMouseOutside: boolean = false;
 
   constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     this.canvas = canvas;
     this.ctx = ctx;
-    this.mousePos = { x: 0, y: 0 };
+    this.mousePos = { x: canvas.width / 2, y: canvas.height / 2 };
   }
 
   createParticle(): Particle {
@@ -47,8 +48,28 @@ export class ParticleSystem {
     this.particles = Array(count).fill(null).map(() => this.createParticle());
   }
 
+  resetParticles() {
+    this.particles.forEach(particle => {
+      Object.assign(particle, this.createParticle());
+    });
+    this.mousePos = { x: this.canvas.width / 2, y: this.canvas.height / 2 };
+  }
+
   updateMousePosition(x: number, y: number) {
-    this.mousePos = { x, y };
+    // Check if mouse is within canvas bounds
+    const isOutside = x < 0 || x > this.canvas.width || y < 0 || y > this.canvas.height;
+    
+    if (isOutside !== this.isMouseOutside) {
+      this.isMouseOutside = isOutside;
+      if (isOutside) {
+        // Reset mouse position to center when leaving
+        this.mousePos = { x: this.canvas.width / 2, y: this.canvas.height / 2 };
+      }
+    }
+
+    if (!isOutside) {
+      this.mousePos = { x, y };
+    }
   }
 
   update() {

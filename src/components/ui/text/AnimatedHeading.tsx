@@ -1,45 +1,45 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { headingAnimation } from '@/components/ui/text/animations/heading';
+import { cn } from '@/lib/utils';
 
 interface AnimatedHeadingProps {
   text: string;
   className?: string;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
-export function AnimatedHeading({ text, className }: AnimatedHeadingProps) {
-  const container = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.05,
-        ease: [0.22, 1, 0.36, 1]
-      }
-    }
-  };
+const sizeClasses = {
+  sm: 'text-3xl',
+  md: 'text-4xl',
+  lg: 'text-5xl',
+  xl: 'text-6xl'
+};
 
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0
-    }
-  };
-
+export function AnimatedHeading({ 
+  text, 
+  className,
+  size = 'lg' 
+}: AnimatedHeadingProps) {
   return (
     <motion.h1 
-      className={className}
-      variants={container}
+      className={cn(
+        "font-normal tracking-[-0.05em] text-white/90",
+        sizeClasses[size],
+        className
+      )}
+      variants={headingAnimation.container}
       initial="hidden"
       animate="visible"
     >
       {text.split('').map((char, index) => (
         <motion.span
           key={index}
-          variants={item}
+          variants={headingAnimation.letter}
+          className="inline-block"
         >
-          {char}
+          {char === ' ' ? '\u00A0' : char}
         </motion.span>
       ))}
     </motion.h1>
