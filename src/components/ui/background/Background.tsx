@@ -15,7 +15,6 @@ export function Background({ children, className }: BackgroundProps) {
       {/* Darkest base background */}
       <div className="fixed inset-0 bg-[#020a14]" />
       
-      {/* Very pronounced gradient overlay */}
       <div 
         className="fixed inset-0"
         style={{ 
@@ -27,11 +26,7 @@ export function Background({ children, className }: BackgroundProps) {
           )`
         }}
       />
-      
-      {/* Particles */}
       <Particles />
-      
-      {/* Content */}
       <div className="relative z-10">
         {children}
       </div>

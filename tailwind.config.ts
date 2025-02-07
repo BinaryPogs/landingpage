@@ -18,7 +18,10 @@ const config: Config = {
         'background-base': themeConfig.colors.background.base,
         'background-gradient-from': themeConfig.colors.background.gradient.from,
         'background-gradient-to': themeConfig.colors.background.gradient.to,
-      }
+      },
+      fontFamily: {
+        sans: ['var(--font-cabinet)', 'system-ui', 'sans-serif'],
+      },
     },
   },
   safelist: [
