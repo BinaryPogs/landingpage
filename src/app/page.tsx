@@ -4,10 +4,10 @@ import { useRef } from "react";
 import { useScroll, useTransform } from "framer-motion";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { FeaturesSection } from "@/components/sections/FeaturesSection";
-import { DCAPreviewSection } from "@/components/sections/DCAPreviewSection";
 import { WaitlistSection } from "@/components/sections/WaitlistSection";
 import { LogoGenerationSection } from "@/components/sections/LogoGenerationSection";
 import { WorkflowSection } from "@/components/sections/WorkflowSection";
+
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);

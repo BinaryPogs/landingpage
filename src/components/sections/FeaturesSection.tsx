@@ -2,7 +2,7 @@
 
 import { motion, MotionValue } from "framer-motion";
 import { FeatureCard } from "@/components/ui/features/FeatureCard";
-import { Sparkles, Code2, Palette, Lock } from "lucide-react";
+import { Sparkles, Code2, Lock } from "lucide-react";
 
 interface FeaturesSectionProps {
   opacity: MotionValue<number>;
