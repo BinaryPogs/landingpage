@@ -8,6 +8,7 @@ interface AnimatedHeadingProps {
   text: string;
   className?: string;
   size?: 'sm' | 'md' | 'lg' | 'xl';
+  delay?: number;
 }
 
 const sizeClasses = {
@@ -20,7 +21,8 @@ const sizeClasses = {
 export function AnimatedHeading({ 
   text, 
   className,
-  size = 'lg' 
+  size = 'lg',
+  delay = 0
 }: AnimatedHeadingProps) {
   return (
     <motion.h1 
@@ -29,19 +31,12 @@ export function AnimatedHeading({
         sizeClasses[size],
         className
       )}
+      custom={delay}
       variants={headingAnimation.container}
       initial="hidden"
       animate="visible"
     >
-      {text.split('').map((char, index) => (
-        <motion.span
-          key={index}
-          variants={headingAnimation.letter}
-          className="inline-block"
-        >
-          {char === ' ' ? '\u00A0' : char}
-        </motion.span>
-      ))}
+      {text}
     </motion.h1>
   );
 } 
