@@ -1,0 +1,68 @@
+<svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Bubbles -->
+  <circle cx="140" cy="160" r="8" fill="#A8E6FF" opacity="0.8"/>
+  <circle cx="200" cy="155" r="6" fill="#A8E6FF" opacity="0.8"/>
+  <circle cx="170" cy="150" r="10" fill="#A8E6FF" opacity="0.8"/>
+  
+  <!-- Main bubble bath cloud -->
+  <path
+    d="M120 170
+       C90 170 90 150 120 150
+       L220 150
+       C250 150 250 170 220 170
+       Z"
+    fill="#A8E6FF"
+  />
+  
+  <!-- Dog face -->
+  <circle cx="170" cy="140" r="40" fill="white"/> <!-- Main face -->
+  
+  <!-- Ears -->
+  <path
+    d="M140 120
+       C130 110 125 115 130 125
+       C135 135 145 130 140 120
+       Z"
+    fill="white"
+  />
+  <path
+    d="M200 120
+       C210 110 215 115 210 125
+       C205 135 195 130 200 120
+       Z"
+    fill="white"
+  />
+  
+  <!-- Eyes -->
+  <circle cx="155" cy="135" r="5" fill="#4A4A4A"/>
+  <circle cx="185" cy="135" r="5" fill="#4A4A4A"/>
+  
+  <!-- Nose -->
+  <path
+    d="M170 145
+       L165 155
+       L175 155
+       Z"
+    fill="#4A4A4A"
+  />
+  
+  <!-- Mouth -->
+  <path
+    d="M170 155
+       C170 160 175 165 170 165"
+    stroke="#4A4A4A"
+    stroke-width="2"
+    fill="none"
+  />
+  
+  <!-- Crown -->
+  <path
+    d="M155 100
+       L170 85
+       L185 100
+       L180 110
+       L160 110
+       Z"
+    fill="#FFD700"
+  />
+</svg>
